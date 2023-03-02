@@ -114,7 +114,7 @@ default_permissions:
 
   # Manage team discussions and related comments.
   # https://developer.github.com/v3/apps/permissions/#permission-on-team-discussions
-  # team_discussions: read
+  team_discussions: read
 
   # Manage the post-receive hooks for an organization.
   # https://developer.github.com/v3/apps/permissions/#permission-on-organization-hooks
@@ -124,7 +124,7 @@ default_permissions:
   # https://developer.github.com/v3/apps/permissions/
   # organization_administration: read
 # The name of the GitHub App. Defaults to the name specified in package.json
-name: ChatGPT Bot
+name: GPT 3.5 Turbo Bot
 
 # The homepage of your GitHub App.
 url: https://github.com/austenstone/chatgpt-bot

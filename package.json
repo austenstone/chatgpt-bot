@@ -14,9 +14,11 @@
   "scripts": {
     "build": "tsc",
     "start": "probot run ./lib/index.js",
+    "debug": "export LOG_LEVEL=trace npm start",
     "test": "jest"
   },
   "dependencies": {
+    "openai": "^3.2.1",
     "probot": "^12.2.4"
   },
   "devDependencies": {
