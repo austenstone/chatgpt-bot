@@ -1,9 +1,12 @@
 name: Usage
 
 on:
-  issues:
+  issue_comment:
     types:
-      - opened
+      - created
+  issue_comment:
+    types:
+      - created
 
 jobs:
   run-bot:
