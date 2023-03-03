@@ -14,7 +14,7 @@ const getCommentRequest = async (
     },
     {
       role: "assistant",
-      content: `This is the user's context of the event in JSON format: ${JSON.stringify(context).substring(0, 4000)}`,
+      content: `This is the context of the event in JSON format: ${JSON.stringify(context).substring(0, 4000)}`,
     },
     ...(assist || []),
     {
@@ -26,7 +26,6 @@ const getCommentRequest = async (
     model: "gpt-3.5-turbo",
     messages,
   });
-  if (messages) console.log("messages");
   return response.data.choices[0].message?.content || "Error";
 };
 
