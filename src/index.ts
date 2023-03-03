@@ -49,6 +49,8 @@ const getOpenAIKey = async (context: any): Promise<string> => {
 };
 
 export = (app: Probot) => {
+  app.log("Yay! The app was loaded!");
+  
   app.on("issue_comment.created", async (context) => {
     if (context.isBot) return;
     if (!["/gpt", "/chatgpt", "@gpt", "@chatgpt"].some((starter) =>

@@ -1,0 +1,14 @@
+name: Usage
+
+on:
+  issues:
+    types:
+      - opened
+
+jobs:
+  run-bot:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: austenstone/chatgpt-bot@main
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

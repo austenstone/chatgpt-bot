@@ -1,0 +1,8 @@
+name: ChatGPT Assistant
+description: "Talk to ChatGPT using Issue and PR comments"
+branding:
+  icon: "github"
+  color: green
+runs:
+  using: "node12"
+  main: "dist/actions.js"
