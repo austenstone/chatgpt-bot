@@ -1,4 +1,4 @@
-const { run } = require("@probot/adapter-github-actions");
-const app = require("./index");
+import probot from "@probot/adapter-github-actions";
+import app from "./index"
 
-run(app);
+probot.run(app);

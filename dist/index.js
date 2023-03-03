@@ -8191,17 +8191,6 @@ module.exports = {
 
 "use strict";
 
-var __assign = (this && this.__assign) || function () {
-    __assign = Object.assign || function(t) {
-        for (var s, i = 1, n = arguments.length; i < n; i++) {
-            s = arguments[i];
-            for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p))
-                t[p] = s[p];
-        }
-        return t;
-    };
-    return __assign.apply(this, arguments);
-};
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
     function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
     return new (P || (P = Promise))(function (resolve, reject) {
@@ -8211,243 +8200,146 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-var __generator = (this && this.__generator) || function (thisArg, body) {
-    var _ = { label: 0, sent: function() { if (t[0] & 1) throw t[1]; return t[1]; }, trys: [], ops: [] }, f, y, t, g;
-    return g = { next: verb(0), "throw": verb(1), "return": verb(2) }, typeof Symbol === "function" && (g[Symbol.iterator] = function() { return this; }), g;
-    function verb(n) { return function (v) { return step([n, v]); }; }
-    function step(op) {
-        if (f) throw new TypeError("Generator is already executing.");
-        while (g && (g = 0, op[0] && (_ = 0)), _) try {
-            if (f = 1, y && (t = op[0] & 2 ? y["return"] : op[0] ? y["throw"] || ((t = y["return"]) && t.call(y), 0) : y.next) && !(t = t.call(y, op[1])).done) return t;
-            if (y = 0, t) op = [op[0] & 2, t.value];
-            switch (op[0]) {
-                case 0: case 1: t = op; break;
-                case 4: _.label++; return { value: op[1], done: false };
-                case 5: _.label++; y = op[1]; op = [0]; continue;
-                case 7: op = _.ops.pop(); _.trys.pop(); continue;
-                default:
-                    if (!(t = _.trys, t = t.length > 0 && t[t.length - 1]) && (op[0] === 6 || op[0] === 2)) { _ = 0; continue; }
-                    if (op[0] === 3 && (!t || (op[1] > t[0] && op[1] < t[3]))) { _.label = op[1]; break; }
-                    if (op[0] === 6 && _.label < t[1]) { _.label = t[1]; t = op; break; }
-                    if (t && _.label < t[2]) { _.label = t[2]; _.ops.push(op); break; }
-                    if (t[2]) _.ops.pop();
-                    _.trys.pop(); continue;
-            }
-            op = body.call(thisArg, _);
-        } catch (e) { op = [6, e]; y = 0; } finally { f = t = 0; }
-        if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
-    }
-};
-var __spreadArray = (this && this.__spreadArray) || function (to, from, pack) {
-    if (pack || arguments.length === 2) for (var i = 0, l = from.length, ar; i < l; i++) {
-        if (ar || !(i in from)) {
-            if (!ar) ar = Array.prototype.slice.call(from, 0, i);
-            ar[i] = from[i];
-        }
-    }
-    return to.concat(ar || Array.prototype.slice.call(from));
-};
-var openai_1 = __nccwpck_require__(9211);
-var getCommentRequest = function (openai, content, context, assist) { return __awaiter(void 0, void 0, void 0, function () {
-    var messages, response;
+const openai_1 = __nccwpck_require__(9211);
+const getCommentRequest = (openai, content, context, assist) => __awaiter(void 0, void 0, void 0, function* () {
     var _a;
-    return __generator(this, function (_b) {
-        switch (_b.label) {
-            case 0:
-                messages = __spreadArray(__spreadArray([
-                    {
-                        role: "system",
-                        content: "You are a helpful bot that helps people on GitHub",
-                    },
-                    {
-                        role: "assistant",
-                        content: "This is the context of the event in JSON format: ".concat(JSON.stringify(context).substring(0, 4000)),
-                    }
-                ], (assist || []), true), [
-                    {
-                        role: "user",
-                        content: content,
-                    },
-                ], false);
-                return [4 /*yield*/, openai.createChatCompletion({
-                        model: "gpt-3.5-turbo",
-                        messages: messages,
-                    })];
-            case 1:
-                response = _b.sent();
-                return [2 /*return*/, ((_a = response.data.choices[0].message) === null || _a === void 0 ? void 0 : _a.content) || "Error"];
-        }
+    const messages = [
+        {
+            role: "system",
+            content: "You are a helpful bot that helps people on GitHub",
+        },
+        {
+            role: "assistant",
+            content: `This is the context of the event in JSON format: ${JSON.stringify(context).substring(0, 4000)}`,
+        },
+        ...(assist || []),
+        {
+            role: "user",
+            content,
+        },
+    ];
+    const response = yield openai.createChatCompletion({
+        model: "gpt-3.5-turbo",
+        messages,
     });
-}); };
-var buildCommentRequest = function (context, response) {
+    return ((_a = response.data.choices[0].message) === null || _a === void 0 ? void 0 : _a.content) || "Error";
+});
+const buildCommentRequest = (context, response) => {
     return {
-        body: "@".concat(context.payload.sender.login, " ").concat(response),
+        body: `@${context.payload.sender.login} ${response}`,
     };
 };
-var getOpenAIKey = function (context) { return __awaiter(void 0, void 0, void 0, function () {
-    var openaiApiKey;
-    return __generator(this, function (_a) {
-        switch (_a.label) {
-            case 0:
-                openaiApiKey = process.env.OPENAI_API_KEY;
-                if (!!openaiApiKey) return [3 /*break*/, 2];
-                return [4 /*yield*/, context.octokit.issues.createComment(context.issue({
-                        body: "You installed [ChatGPT Assistant](https://github.com/apps/chatgpt-assistant) but have not set the `OPENAI_API_KEY` environment variable. Please do so to use this bot.",
-                    }))];
-            case 1:
-                _a.sent();
-                throw new Error("OPENAI_API_KEY not set");
-            case 2: return [2 /*return*/, openaiApiKey];
+const getOpenAIKey = (context) => __awaiter(void 0, void 0, void 0, function* () {
+    const openaiApiKey = process.env.OPENAI_API_KEY;
+    if (!openaiApiKey) {
+        yield context.octokit.issues.createComment(context.issue({
+            body: "You installed [ChatGPT Assistant](https://github.com/apps/chatgpt-assistant) but have not set the `OPENAI_API_KEY` environment variable. Please do so to use this bot.",
+        }));
+        throw new Error("OPENAI_API_KEY not set");
+    }
+    return openaiApiKey;
+});
+module.exports = (app) => {
+    app.log("Yay! The app was loaded!");
+    app.on("issue_comment.created", (context) => __awaiter(void 0, void 0, void 0, function* () {
+        var _a, _b;
+        if (context.isBot)
+            return;
+        if (!["/gpt", "/chatgpt", "@gpt", "@chatgpt"].some((starter) => context.payload.comment.body.startsWith(starter)))
+            return;
+        if (context.payload.action !== "created")
+            return;
+        const openaiApiKey = yield getOpenAIKey(context);
+        const configuration = new openai_1.Configuration({ apiKey: openaiApiKey });
+        const openai = new openai_1.OpenAIApi(configuration);
+        const assist = [];
+        let previousComments;
+        let issue;
+        let type;
+        let diff;
+        if (context.payload.issue.pull_request) {
+            type = "pull_request";
+            previousComments = yield context.octokit.pulls.listReviewComments(context.pullRequest());
+            issue = yield context.octokit.pulls.get(context.pullRequest());
+            diff = (_a = ((yield context.octokit.pulls.get(context.pullRequest({
+                mediaType: {
+                    format: "diff",
+                },
+            }))))) === null || _a === void 0 ? void 0 : _a.data;
         }
-    });
-}); };
-module.exports = function (app) {
-    app.on("issue_comment.created", function (context) { return __awaiter(void 0, void 0, void 0, function () {
-        var openaiApiKey, configuration, openai, assist, previousComments, issue, type, diff, response, issueComment;
-        var _a, _b;
-        return __generator(this, function (_c) {
-            switch (_c.label) {
-                case 0:
-                    if (context.isBot)
-                        return [2 /*return*/];
-                    if (!["/gpt", "/chatgpt", "@gpt", "@chatgpt"].some(function (starter) {
-                        return context.payload.comment.body.startsWith(starter);
-                    }))
-                        return [2 /*return*/];
-                    if (context.payload.action !== "created")
-                        return [2 /*return*/];
-                    return [4 /*yield*/, getOpenAIKey(context)];
-                case 1:
-                    openaiApiKey = _c.sent();
-                    configuration = new openai_1.Configuration({ apiKey: openaiApiKey });
-                    openai = new openai_1.OpenAIApi(configuration);
-                    assist = [];
-                    if (!context.payload.issue.pull_request) return [3 /*break*/, 5];
-                    type = "pull_request";
-                    return [4 /*yield*/, context.octokit.pulls.listReviewComments(context.pullRequest())];
-                case 2:
-                    previousComments = _c.sent();
-                    return [4 /*yield*/, context.octokit.pulls.get(context.pullRequest())];
-                case 3:
-                    issue = _c.sent();
-                    return [4 /*yield*/, context.octokit.pulls.get(context.pullRequest({
-                            mediaType: {
-                                format: "diff",
-                            },
-                        }))];
-                case 4:
-                    diff = (_a = ((_c.sent()))) === null || _a === void 0 ? void 0 : _a.data;
-                    return [3 /*break*/, 8];
-                case 5:
-                    type = "issue";
-                    return [4 /*yield*/, context.octokit.issues.listComments(context.issue())];
-                case 6:
-                    previousComments = _c.sent();
-                    return [4 /*yield*/, context.octokit.issues.get(context.issue())];
-                case 7:
-                    issue = _c.sent();
-                    _c.label = 8;
-                case 8:
-                    assist.push({
-                        role: "assistant",
-                        content: "This is the ".concat(type, ": ").concat(issue.data.title.substring(0, 4096), " ").concat((_b = issue.data.body) === null || _b === void 0 ? void 0 : _b.substring(0, 4096)),
-                    });
-                    assist.push({
-                        role: "assistant",
-                        content: "These are the previous messages in the conversation in JSON format: ".concat(JSON.stringify(previousComments.data.map(function (comment) { return "@".concat(comment.user.login, " says ").concat(comment.body.replace("/chatgpt", "").trim()); })).substring(0, 4000)),
-                    });
-                    if (diff) {
-                        assist.push({
-                            role: "assistant",
-                            content: "This is the pull request diff: ".concat(diff.substring(0, 4000)),
-                        });
-                    }
-                    return [4 /*yield*/, getCommentRequest(openai, context.payload.comment.body, context, assist)];
-                case 9:
-                    response = _c.sent();
-                    issueComment = context.issue(buildCommentRequest(context, response));
-                    return [4 /*yield*/, context.octokit.issues.createComment(issueComment)];
-                case 10:
-                    _c.sent();
-                    return [2 /*return*/];
+        else {
+            type = "issue";
+            previousComments = yield context.octokit.issues.listComments(context.issue());
+            issue = yield context.octokit.issues.get(context.issue());
+        }
+        assist.push({
+            role: "assistant",
+            content: `This is the ${type}: ${issue.data.title.substring(0, 4096)} ${(_b = issue.data.body) === null || _b === void 0 ? void 0 : _b.substring(0, 4096)}`,
+        });
+        assist.push({
+            role: "assistant",
+            content: `These are the previous messages in the conversation in JSON format: ${JSON.stringify(previousComments.data.map((comment) => `@${comment.user.login} says ${comment.body.replace("/chatgpt", "").trim()}`)).substring(0, 4000)}`,
+        });
+        if (diff) {
+            assist.push({
+                role: "assistant",
+                content: `This is the pull request diff: ${diff.substring(0, 4000)}`,
+            });
+        }
+        const response = yield getCommentRequest(openai, context.payload.comment.body, context, assist);
+        const issueComment = context.issue(buildCommentRequest(context, response));
+        yield context.octokit.issues.createComment(issueComment);
+    }));
+    app.on(["pull_request_review_comment"], (context) => __awaiter(void 0, void 0, void 0, function* () {
+        var _c, _d;
+        if (context.isBot)
+            return;
+        if (!["/gpt", "/chatgpt", "@gpt", "@chatgpt"].some((starter) => context.payload.comment.body.startsWith(starter)))
+            return;
+        if (context.payload.action !== "created")
+            return;
+        const openaiApiKey = yield getOpenAIKey(context);
+        const configuration = new openai_1.Configuration({ apiKey: openaiApiKey });
+        const openai = new openai_1.OpenAIApi(configuration);
+        const previousComments = yield context.octokit.pulls.listReviewComments(context.pullRequest());
+        const pullRequest = yield context.octokit.pulls.get(context.pullRequest());
+        console.log(context.payload);
+        const diff = (_c = ((yield context.octokit.pulls.get(context.pullRequest({
+            mediaType: {
+                format: "diff",
+            },
+        }))))) === null || _c === void 0 ? void 0 : _c.data;
+        const response = yield getCommentRequest(openai, context.payload.comment.body, context, [
+            {
+                role: "system",
+                content: "You are good at helping review pull requests and explaining code",
+            },
+            {
+                role: "assistant",
+                content: `This is the pull request diff: ${diff.substring(0, 4000)}`,
+            },
+            {
+                role: "assistant",
+                content: `This is the pull request: ${pullRequest.data.title.substring(0, 4000)} ${(_d = pullRequest.data.body) === null || _d === void 0 ? void 0 : _d.substring(0, 4000)}`,
+            },
+            {
+                role: "assistant",
+                content: `These are the previous messages in the conversation in JSON format: ${JSON.stringify(previousComments.data.map((comment) => `@${comment.user.login} says ${comment.body
+                    .replace("/chatgpt", "")
+                    .trim()}`)).substring(0, 4000)}`,
+            },
+            {
+                role: "assistant",
+                content: `We are talking about lines: ${context.payload.comment.start_line} - ${context.payload.comment.line}`,
             }
-        });
-    }); });
-    app.on(["pull_request_review_comment"], function (context) { return __awaiter(void 0, void 0, void 0, function () {
-        var openaiApiKey, configuration, openai, previousComments, pullRequest, diff, response, pullrequestReviewComment;
-        var _a, _b;
-        return __generator(this, function (_c) {
-            switch (_c.label) {
-                case 0:
-                    if (context.isBot)
-                        return [2 /*return*/];
-                    if (!["/gpt", "/chatgpt", "@gpt", "@chatgpt"].some(function (starter) {
-                        return context.payload.comment.body.startsWith(starter);
-                    }))
-                        return [2 /*return*/];
-                    if (context.payload.action !== "created")
-                        return [2 /*return*/];
-                    return [4 /*yield*/, getOpenAIKey(context)];
-                case 1:
-                    openaiApiKey = _c.sent();
-                    configuration = new openai_1.Configuration({ apiKey: openaiApiKey });
-                    openai = new openai_1.OpenAIApi(configuration);
-                    return [4 /*yield*/, context.octokit.pulls.listReviewComments(context.pullRequest())];
-                case 2:
-                    previousComments = _c.sent();
-                    return [4 /*yield*/, context.octokit.pulls.get(context.pullRequest())];
-                case 3:
-                    pullRequest = _c.sent();
-                    console.log(context.payload);
-                    return [4 /*yield*/, context.octokit.pulls.get(context.pullRequest({
-                            mediaType: {
-                                format: "diff",
-                            },
-                        }))];
-                case 4:
-                    diff = (_a = ((_c.sent()))) === null || _a === void 0 ? void 0 : _a.data;
-                    return [4 /*yield*/, getCommentRequest(openai, context.payload.comment.body, context, [
-                            {
-                                role: "system",
-                                content: "You are good at helping review pull requests and explaining code",
-                            },
-                            {
-                                role: "assistant",
-                                content: "This is the pull request diff: ".concat(diff.substring(0, 4000)),
-                            },
-                            {
-                                role: "assistant",
-                                content: "This is the pull request: ".concat(pullRequest.data.title.substring(0, 4000), " ").concat((_b = pullRequest.data.body) === null || _b === void 0 ? void 0 : _b.substring(0, 4000)),
-                            },
-                            {
-                                role: "assistant",
-                                content: "These are the previous messages in the conversation in JSON format: ".concat(JSON.stringify(previousComments.data.map(function (comment) {
-                                    return "@".concat(comment.user.login, " says ").concat(comment.body
-                                        .replace("/chatgpt", "")
-                                        .trim());
-                                })).substring(0, 4000)),
-                            },
-                            {
-                                role: "assistant",
-                                content: "We are talking about lines: ".concat(context.payload.comment.start_line, " - ").concat(context.payload.comment.line),
-                            }
-                        ])];
-                case 5:
-                    response = _c.sent();
-                    pullrequestReviewComment = context.pullRequest(__assign(__assign({}, buildCommentRequest(context, response)), { in_reply_to: context.payload.comment.id }));
-                    return [4 /*yield*/, context.octokit.pulls.createReviewComment(pullrequestReviewComment)];
-                case 6:
-                    _c.sent();
-                    return [2 /*return*/];
-            }
-        });
-    }); });
-    app.on("discussion_comment", function (context) { return __awaiter(void 0, void 0, void 0, function () {
-        return __generator(this, function (_a) {
-            console.log(context.payload);
-            return [2 /*return*/];
-        });
-    }); });
+        ]);
+        const pullrequestReviewComment = context.pullRequest(Object.assign(Object.assign({}, buildCommentRequest(context, response)), { in_reply_to: context.payload.comment.id }));
+        yield context.octokit.pulls.createReviewComment(pullrequestReviewComment);
+    }));
+    app.on("discussion_comment", (context) => __awaiter(void 0, void 0, void 0, function* () {
+        console.log(context.payload);
+        return;
+    }));
 };
 
 
