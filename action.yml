@@ -5,4 +5,4 @@ branding:
   color: green
 runs:
   using: "node12"
-  main: "dist/actions.js"
+  main: "dist/index.js"
