@@ -13,7 +13,7 @@
   ],
   "scripts": {
     "build": "tsc",
-    "build:action": "ncc build src/index.ts",
+    "build:action": "ncc build src/actions.ts",
     "start": "probot run ./lib/index.js",
     "debug": "export LOG_LEVEL=trace npm start",
     "lint": "eslint src/**/*.ts",

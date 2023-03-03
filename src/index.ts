@@ -48,7 +48,7 @@ const getOpenAIKey = async (context: any): Promise<string> => {
   return openaiApiKey;
 };
 
-export = (app: Probot) => {
+export default (app: Probot) => {
   app.log("Yay! The app was loaded!");
   
   app.on("issue_comment.created", async (context) => {
