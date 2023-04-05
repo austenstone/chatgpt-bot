@@ -1,7 +1,7 @@
 name: ChatGPT Assistant
 description: "Talk to ChatGPT using Issue and PR comments"
 branding:
-  icon: "github"
+  icon: "message-circle"
   color: green
 runs:
   using: "node16"
