@@ -23,6 +23,7 @@ docker run -e APP_ID=<app-id> -e PRIVATE_KEY=<pem-value> chatgpt-bot
 ```
 
 ## Action
+We also use [@probot/adapter-github-actions](https://www.npmjs.com/package/@probot/adapter-github-actions) to run this App as a GitHub Action.
 See [usage.yml](https://github.com/austenstone/chatgpt-bot/blob/main/.github/workflows/usage.yml).
 
 ```yml
