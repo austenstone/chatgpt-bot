@@ -1,6 +1,6 @@
 # chatgpt-bot
 
-> A GitHub App built with [Probot](https://github.com/probot/probot) that Talk to ChatGPT using Issue and PR comments.
+A GitHub App built with [Probot](https://github.com/probot/probot) that allows you to talk to ChatGPT using Issue and PR comments.
 
 ## Setup
 
