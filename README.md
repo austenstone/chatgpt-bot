@@ -3,14 +3,15 @@
 A GitHub App built with [Probot](https://github.com/probot/probot) that allows you to talk to ChatGPT using Issue and PR comments.
 
 <details>
-<summary> Issue Example Image </summary>
+  <summary> Issue Example Image </summary>
 
-![image](https://marketplace-screenshots.githubusercontent.com/14679/50322429-3714-4950-954c-8c2bf1af4bf0?auto=webp&format=jpeg&width=670&dpr=1.5)
+  ![image](https://marketplace-screenshots.githubusercontent.com/14679/817e76d7-5acb-4746-af56-47994a832743?auto=webp&format=jpeg&width=670&dpr=1.5)
 </details>
-<details>
-<summary> PR Example Image </summary>
 
-![image](https://marketplace-screenshots.githubusercontent.com/14679/817e76d7-5acb-4746-af56-47994a832743?auto=webp&format=jpeg&width=670&dpr=1.5)
+<details>
+  <summary> PR Example Image </summary>
+
+  ![image](https://marketplace-screenshots.githubusercontent.com/14679/50322429-3714-4950-954c-8c2bf1af4bf0?auto=webp&format=jpeg&width=670&dpr=1.5)
 </details>
 
 ## Setup
