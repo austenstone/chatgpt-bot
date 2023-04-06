@@ -16,9 +16,14 @@ A GitHub App built with [Probot](https://github.com/probot/probot) that allows y
 
 ## Setup
 
+See [Configuring a GitHub App](https://probot.github.io/docs/development/#configuring-a-github-app)
+
 ```sh
 # Install dependencies
 npm install
+
+# Build the bot
+npm build
 
 # Run the bot
 npm start
