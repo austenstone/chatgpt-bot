@@ -41,7 +41,7 @@ docker run -e APP_ID=<app-id> -e PRIVATE_KEY=<pem-value> chatgpt-bot
 
 Or use the published version [here](https://github.com/austenstone/chatgpt-bot/pkgs/container/chatgpt-bot)
 ```
-docker run -e APP_ID=<app-id> -e PRIVATE_KEY=<pem-value> ghcr.io/austenstone/chatgpt-bot:latest
+docker run -e APP_ID=<app-id> -e PRIVATE_KEY=<pem-value> ghcr.io/austenstone/chatgpt-bot:main
 ```
 
 ## Action
